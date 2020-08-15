@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.DormmanagerDao">
+    <resultMap id="dormmanagerMap" type="com.qf.pojo.Dormmanager">
+        <id column="dormManId" property="dormManId"></id>
+        <result column="userName" property="userName"></result>
+        <result column="password" property="password"></result>
+        <result column="dormBuildId" property="dormBuildId"></result>
+        <result column="name" property="name"></result>
+        <result column="sex" property="sex"></result>
+        <result column="tel" property="tel"></result>
+        <result column="dormBuildName" property="dormBuildName"></result>
+    </resultMap>
+    <select id="findAll" parameterType="string" resultMap="dormmanagerMap">
+        select d.*,dd.dormBuildName from t_dormmanager d
+        inner join t_dormbuild dd
+        on d.dormBuildId=dd.dormBuildId
+        <where>
+             <if test="userName != null">
+               d.userName like '%${userName}%'
+             </if>
+
+
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="com.qf.pojo.Dormmanager">
+        delete from t_dormmanager where dormManId = #{dormManId}
+    </delete>
+
+    <insert id="insert" parameterType="com.qf.pojo.Dormmanager">
+        insert into t_dormmanager (dormManId,userName,password,dormBuildId,name,sex,tel) values (#{dormManId},#{userName},#{password},#{dormBuildId},#{name},#{sex},#{tel})
+    </insert>
+
+    <update id="update" parameterType="com.qf.pojo.Dormmanager">
+        update t_dormmanager set userName=#{userName},password=#{password},dormBuildId=#{dormBuildId},name=#{name},sex=#{sex},tel=#{tel} where dormManId=#{dormManId}
+    </update>
+
+
+</mapper>
+
