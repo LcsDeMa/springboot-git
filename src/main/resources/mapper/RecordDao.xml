@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.RecordDao">
+    <resultMap id="RecordMap" type="com.qf.pojo.Record">
+        <id column="recordId" property="recordId"></id>
+        <result column="stuNum" property="stuNum"></result>
+        <result column="name" property="name"></result>
+        <result column="dormBuildId" property="dormBuildId"></result>
+        <result column="dormName" property="dormName"></result>
+        <result column="date" property="date"></result>
+        <result column="detail" property="detail"></result>
+        <association property="dormbuild" javaType="com.qf.pojo.Dormbuild">
+            <id column="dormBuildId" property="dormBuildId"></id>
+            <result column="dormBuildName" property="dormBuildName"></result>
+        </association>
+    </resultMap>
+    <select id="findAll" resultMap="RecordMap">
+        select r.recordId,r.name,r.stuNum,r.dormName,r.date,r.detail,d.dormBuildName from t_record r
+        inner join t_dormbuild d
+        on d.dormBuildId=r.dormBuildId
+
+    </select>
+    <delete id="deleteById">
+        delete from t_record where recordId=#{recordId}
+    </delete>
+    <select id="findById" resultMap="RecordMap">
+        select r.recordId,r.name,r.stuNum,r.dormName,r.date,r.detail,d.dormBuildName from t_record r
+        inner join t_dormbuild d
+        on d.dormBuildId=r.dormBuildId
+        where recordId=#{recordId}
+    </select>
+    <insert id="addRecord">
+        insert into t_record(stuNum,name,dormBuildId,dormName,date,detail)values (#{stuNum},#{name},#{dormBuildId},#{dormName},#{date},#{detail})
+    </insert>
+    <update id="updateRecord">
+        update t_record set stuNum=#{stuNum}, name=#{name},dormBuildId=#{dormBuildId},dormName=#{dormName},date=#{date},detail=#{detail} where recordId=#{recordId}
+    </update>
+</mapper>
