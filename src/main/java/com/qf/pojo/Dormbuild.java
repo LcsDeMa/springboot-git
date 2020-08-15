@@ -10,8 +10,7 @@ import lombok.Data;
 @TableName("t_dormbuild")
 public class Dormbuild {
 
-    @TableId(type = IdType.NONE)
-    @TableField("dormBuildId")
+    @TableId(value = "dormBuildId",type = IdType.NONE)
     private Integer dormBuildId;
     @TableField("dormBuildName")
     private  String dormBuildName;
