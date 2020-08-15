@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.DormDao">
+
+    <resultMap id="dorm" type="com.qf.pojo.Dorm">
+        <id property="dormId" column="dormId"></id>
+        <result property="dormBuildName" column="dormBuildName"></result>
+        <result property="dormBuildId" column="dormBuildId"></result>
+        <result property="dormName" column="dormName"></result>
+        <result property="dormNumber" column="dormNumber"></result>
+        <result property="dormType" column="dormType"></result>
+        <result property="tel" column="tel"></result>
+    </resultMap>
+
+    <!--查询全部-->
+    <select id="findAll" resultMap="dorm">
+        select t_dormbuild.dormBuildName,t_dorm.* from t_dormbuild
+        inner join t_dorm
+        on t_dormbuild.dormBuildId = t_dorm.dormBuildId
+    </select>
+
+    <!--单个查询-->
+    <select id="findOne" resultMap="dorm">
+        select t_dormbuild.dormBuildName,t_dorm.* from t_dormbuild
+        inner join t_dorm
+        on t_dormbuild.dormBuildId = t_dorm.dormBuildId
+        where dormBuildId = #{dormBuildId} and dormName = #{dormName}
+    </select>
+
+    <!--添加-->
+    <insert id="addDorm">
+        insert into t_dorm (dormBuildId,dormName,dormNumber,dormType,tel)
+        values(#{dormBuildId},#{dormName},#{dormNumber},#{dormType},#{tel})
+    </insert>
+
+    <!--删除-->
+    <delete id="deleteDorm">
+        delete from t_dorm where dormId = #{dormId}
+    </delete>
+
+    <!--修改-->
+    <update id="updateDorm">
+        update t_dorm set dormBuildId = #{dormBuildId},dormName = #{dormName}
+        ,dormNumber = #{dormNumber},dormType = #{dormType},tel = #{tel}
+        where dormId = #{dormId}
+    </update>
+
+</mapper>
